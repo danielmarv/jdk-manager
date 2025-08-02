@@ -104,8 +104,9 @@ func isLTSVersion(major int) bool {
 			return true
 		}
 	}
-	// Future LTS versions follow a pattern: every 3 years starting from 17
-	if major > 21 && (major-17)%3 == 0 {
+	// Future LTS versions follow a pattern: every 3 years starting from 21
+	// So: 21, 24, 27, 30, etc. (21 + 3*n where n >= 1)
+	if major > 21 && (major-21)%3 == 0 {
 		return true
 	}
 	return false

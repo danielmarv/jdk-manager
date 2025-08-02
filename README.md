@@ -16,23 +16,23 @@ A cross-platform command-line tool for managing multiple Java Development Kit (J
 
 ### From Source
 
-```bash
+\`\`\`bash
 git clone https://github.com/your-username/jdk-manager.git
 cd jdk-manager
 go build -o jdk main.go
-```
+\`\`\`
 
 ### Using Go Install
 
-```bash
+\`\`\`bash
 go install github.com/your-username/jdk-manager@latest
-```
+\`\`\`
 
 ## 🔧 Usage
 
 ### List Available JDK Versions
 
-```bash
+\`\`\`bash
 # List all available versions
 jdk list-remote
 
@@ -41,11 +41,11 @@ jdk list-remote --lts
 
 # List all versions including pre-releases
 jdk list-remote --all
-```
+\`\`\`
 
 ### Install a JDK Version
 
-```bash
+\`\`\`bash
 # Install latest JDK 21
 jdk install 21
 
@@ -54,50 +54,50 @@ jdk install 17.0.8
 
 # Force reinstall
 jdk install 21 --force
-```
+\`\`\`
 
 ### List Installed Versions
 
-```bash
+\`\`\`bash
 jdk list
-```
+\`\`\`
 
 ### Switch JDK Version
 
-```bash
+\`\`\`bash
 # Switch to JDK 21
 jdk use 21
 
 # Switch to specific version
 jdk use 17.0.8
-```
+\`\`\`
 
 The \`use\` command will output the necessary environment variable commands. Run them to activate the JDK:
 
 **Linux/macOS:**
-```bash
+\`\`\`bash
 export JAVA_HOME="/home/user/.jdks/21"
 export PATH="$JAVA_HOME/bin:$PATH"
-```
+\`\`\`
 
 **Windows PowerShell:**
-```powershell
+\`\`\`powershell
 $env:JAVA_HOME = "C:\\Users\\user\\.jdks\\21"
 $env:PATH = "$env:JAVA_HOME\\bin;$env:PATH"
-```
+\`\`\`
 
 ### Get Help
 
-```bash
+\`\`\`bash
 jdk --help
 jdk install --help
-```
+\`\`\`
 
 ## 📁 Directory Structure
 
 JDKs are installed in \`~/.jdks/\` directory:
 
-```
+\`\`\`
 ~/.jdks/
 ├── 21/
 │   ├── bin/
@@ -111,7 +111,7 @@ JDKs are installed in \`~/.jdks/\` directory:
     ├── bin/
     ├── lib/
     └── ...
-```
+\`\`\`
 
 ## 🛠️ Development
 
@@ -122,15 +122,15 @@ JDKs are installed in \`~/.jdks/\` directory:
 
 ### Building
 
-```bash
+\`\`\`bash
 go build -o jdk main.go
-```
+\`\`\`
 
 ### Running Tests
 
-```bash
+\`\`\`bash
 go test ./...
-```
+\`\`\`
 
 ### Dependencies
 
@@ -209,7 +209,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Made with ❤️ for the Java community**
-```
+\`\`\`
 
 ```text file="LICENSE"
 MIT License

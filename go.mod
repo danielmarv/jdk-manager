@@ -3,9 +3,9 @@ module github.com/jdk-manager
 go 1.21
 
 require (
-	github.com/mitchellh/go-homedir v1.1.0
-	github.com/schollz/progressbar/v3 v3.14.1
 	github.com/spf13/cobra v1.8.0
+	github.com/schollz/progressbar/v3 v3.14.1
+	github.com/mitchellh/go-homedir v1.1.0
 )
 
 require (

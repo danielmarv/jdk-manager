@@ -39,8 +39,8 @@ clean: ## Clean build artifacts
 
 deps: ## Download dependencies
 	mkdir -p $(BUILD_DIR)
-	$(GOMOD) tidy
 	$(GOMOD) download
+	$(GOMOD) tidy
 
 install: build ## Install the binary
 	cp $(BUILD_DIR)/$(BINARY_NAME) /usr/local/bin/
