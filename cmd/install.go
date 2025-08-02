@@ -77,6 +77,7 @@ func runInstall(cmd *cobra.Command, args []string) {
 // isValidVersion checks if the version string is in a valid format
 func isValidVersion(version string) bool {
 	// Allow formats like: 21, 17.0.8, 11.0.20
+	// Standard JDK versions follow major[.minor[.security]] format
 	parts := strings.Split(version, ".")
 	
 	for _, part := range parts {
@@ -85,5 +86,5 @@ func isValidVersion(version string) bool {
 		}
 	}
 	
-	return len(parts) >= 1 && len(parts) <= 3
+	return len(parts) >= 1 && len(parts) <= 3  // Allow up to 3 parts: major.minor.security
 }
