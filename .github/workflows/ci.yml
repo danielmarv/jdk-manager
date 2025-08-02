@@ -40,26 +40,26 @@ jobs:
   #     with:
   #       file: ./coverage.out
 
-  build:
-    runs-on: ubuntu-latest
+  # build:
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v4
+  #   steps:
+  #   - uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: 1.21
+  #   - name: Set up Go
+  #     uses: actions/setup-go@v4
+  #     with:
+  #       go-version: 1.21
 
-    - name: Build for multiple platforms
-      run: |
-        make build-all
+  #   - name: Build for multiple platforms
+  #     run: |
+  #       make build-all
 
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: jdk-manager-binaries
-        path: dist/
+  #   - name: Upload build artifacts
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: jdk-manager-binaries
+  #       path: dist/
 
   lint:
     runs-on: ubuntu-latest
