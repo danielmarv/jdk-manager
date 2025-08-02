@@ -1,0 +1,110 @@
+#App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #272e36; /* Dark background for the Wails app */
+  color: #f0f0f0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.container {
+  background-color: #333b45;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+h1 {
+  color: #61dafb; /* A light blue for headings */
+  margin-bottom: 20px;
+  font-size: 2.5em;
+}
+
+p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.input-group {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #a0a0a0;
+}
+
+.input-group input[type="text"] {
+  width: calc(100% - 20px);
+  padding: 12px 10px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background-color: #444;
+  color: #f0f0f0;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+.input-group input[type="text"]::placeholder {
+  color: #888;
+}
+
+button {
+  background-color: #61dafb;
+  color: #272e36;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #4dc9e6;
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.status-message {
+  margin-top: 25px;
+  padding: 15px;
+  border-radius: 5px;
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap; /* Preserve whitespace and line breaks */
+  text-align: left;
+  max-height: 200px; /* Limit height for long outputs */
+  overflow-y: auto; /* Add scroll for overflow */
+}
+
+.status-message.success {
+  background-color: #4caf50; /* Green */
+  color: white;
+}
+
+.status-message.error {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+.note {
+  font-size: 0.9em;
+  color: #a0a0a0;
+  margin-top: 30px;
+}
