@@ -135,7 +135,7 @@ func extractTarFile(tr *tar.Reader, target string, mode os.FileMode) error {
 		return err
 	}
 
-	f, err := os.OpenFile(target, os.O_CREATE|os.O_RDWR, mode)
+	f, err := os.OpenFile(target, os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
 		return err
 	}
@@ -158,7 +158,7 @@ func extractZipFile(f *zip.File, target string) error {
 	}
 	defer rc.Close()
 
-	outFile, err := os.OpenFile(target, os.O_CREATE|os.O_RDWR, f.FileInfo().Mode())
+	outFile, err := os.OpenFile(target, os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
 		return err
 	}
