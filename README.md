@@ -14,90 +14,81 @@ A cross-platform command-line tool for managing multiple Java Development Kit (J
 
 ## 📦 Installation
 
-### From Source
+To install JDK Manager and make the `jdk` command available globally in your terminal, follow the instructions for your operating system.
 
-\`\`\`bash
-git clone https://github.com/your-username/jdk-manager.git
-cd jdk-manager
-go build -o jdk main.go
-\`\`\`
+### **Linux / macOS**
 
-### Using Go Install
+1.  **Navigate to the project directory:**
+    ```bash
+    cd /path/to/jdk-manager
+    ```
+2.  **Run the installer script:**
+    ```bash
+    chmod +x scripts/install.sh
+    sudo scripts/install.sh
+    ```
+    The script will build the `jdk` executable, copy it to `/usr/local/bin`, and set up a shell function in your `~/.bashrc` or `~/.zshrc` for seamless `jdk use` functionality.
+3.  **Restart your terminal** or run `source ~/.bashrc` (or `~/.zshrc`) to activate the `jdk` command.
 
-\`\`\`bash
-go install github.com/your-username/jdk-manager@latest
-\`\`\`
+### **Windows (PowerShell)**
+
+1.  **Navigate to the project directory:**
+    ```powershell
+    cd D:\projects\jdk-manager # Adjust to your actual project path
+    ```
+2.  **Run the installer script:**
+    ```powershell
+    .\scripts\install.ps1
+    ```
+    The script will build the `jdk.exe` executable, copy it to `%USERPROFILE%\bin`, add this directory to your user's PATH, and set up a PowerShell function in your `$PROFILE` for seamless `jdk use` functionality.
+3.  **Restart your PowerShell terminal** to activate the `jdk` command.
 
 ## 🔧 Usage
 
+Once installed, you can use the `jdk` command directly from any directory.
+
 ### List Available JDK Versions
 
-\`\`\`bash
-# List all available versions
+```bash
 jdk list-remote
-
-# List only LTS versions
 jdk list-remote --lts
-
-# List all versions including pre-releases
 jdk list-remote --all
-\`\`\`
+```
 
 ### Install a JDK Version
 
-\`\`\`bash
-# Install latest JDK 21
+```bash
 jdk install 21
-
-# Install specific version
 jdk install 17.0.8
-
-# Force reinstall
 jdk install 21 --force
-\`\`\`
+```
 
 ### List Installed Versions
 
-\`\`\`bash
+```bash
 jdk list
-\`\`\`
+```
 
 ### Switch JDK Version
 
-\`\`\`bash
-# Switch to JDK 21
+```bash
 jdk use 21
-
-# Switch to specific version
 jdk use 17.0.8
-\`\`\`
-
-The \`use\` command will output the necessary environment variable commands. Run them to activate the JDK:
-
-**Linux/macOS:**
-\`\`\`bash
-export JAVA_HOME="/home/user/.jdks/21"
-export PATH="$JAVA_HOME/bin:$PATH"
-\`\`\`
-
-**Windows PowerShell:**
-\`\`\`powershell
-$env:JAVA_HOME = "C:\\Users\\user\\.jdks\\21"
-$env:PATH = "$env:JAVA_HOME\\bin;$env:PATH"
-\`\`\`
+```
+After running `jdk use`, you will see a confirmation message and the `java -version` output for the newly active JDK.
 
 ### Get Help
 
-\`\`\`bash
+```bash
 jdk --help
 jdk install --help
-\`\`\`
+```
 
 ## 📁 Directory Structure
 
 JDKs are installed in \`~/.jdks/\` directory:
 
-\`\`\`
+```
 ~/.jdks/
 ├── 21/
 │   ├── bin/
@@ -111,7 +102,7 @@ JDKs are installed in \`~/.jdks/\` directory:
     ├── bin/
     ├── lib/
     └── ...
-\`\`\`
+```
 
 ## 🛠️ Development
 
@@ -122,15 +113,15 @@ JDKs are installed in \`~/.jdks/\` directory:
 
 ### Building
 
-\`\`\`bash
+```bash
 go build -o jdk main.go
-\`\`\`
+```
 
 ### Running Tests
 
-\`\`\`bash
+```bash
 go test ./...
-\`\`\`
+```
 
 ### Dependencies
 
@@ -209,27 +200,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Made with ❤️ for the Java community**
-\`\`\`
-
-```text file="LICENSE"
-MIT License
-
-Copyright (c) 2024 JDK Manager
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.

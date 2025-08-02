@@ -37,9 +37,9 @@ func runUse(cmd *cobra.Command, args []string) {
 	checkError(err)
 
 	if !installed {
-		fmt.Printf("JDK %s is not installed.\n", version)
-		fmt.Printf("Install it with: jdk install %s\n", version)
-		return
+		fmt.Fprintf(os.Stderr, "Error: JDK %s is not installed.\n", version) // Print error to stderr
+		fmt.Fprintf(os.Stderr, "Install it with: jdk install %s\n", version)
+		os.Exit(1) // Exit with error code
 	}
 
 	// Get the JDK path
@@ -56,37 +56,15 @@ func runUse(cmd *cobra.Command, args []string) {
 }
 
 func generateUnixCommands(version, jdkPath string) {
-	fmt.Printf("# Run the following commands to switch to JDK %s:\n", version)
 	fmt.Printf("export JAVA_HOME=\"%s\"\n", jdkPath)
 	fmt.Printf("export PATH=\"$JAVA_HOME/bin:$PATH\"\n")
-	fmt.Println()
-	fmt.Println("# Or add these to your shell profile (~/.bashrc, ~/.zshrc, etc.) for persistence")
-	fmt.Println()
-	fmt.Printf("✓ JDK %s is ready to use!\n", version)
-	
-	// Show current Java version if possible
-	showJavaVersion()
+	fmt.Printf("echo \"✓ JDK %s is now active!\"\n", version) // Informative message after successful switch
+	fmt.Printf("java -version\n") // Show current Java version
 }
 
 func generateWindowsCommands(version, jdkPath string) {
-	fmt.Printf("# Run the following PowerShell commands to switch to JDK %s:\n", version)
 	fmt.Printf("$env:JAVA_HOME = \"%s\"\n", jdkPath)
 	fmt.Printf("$env:PATH = \"$env:JAVA_HOME\\bin;$env:PATH\"\n")
-	fmt.Println()
-	fmt.Println("# Or for Command Prompt:")
-	fmt.Printf("set JAVA_HOME=%s\n", jdkPath)
-	fmt.Printf("set PATH=%%JAVA_HOME%%\\bin;%%PATH%%\n")
-	fmt.Println()
-	fmt.Printf("✓ JDK %s is ready to use!\n", version)
-	
-	// Show current Java version if possible
-	showJavaVersion()
-}
-
-func showJavaVersion() {
-	// Try to show current Java version
-	javaHome := os.Getenv("JAVA_HOME")
-	if javaHome != "" {
-		fmt.Printf("\nCurrent JAVA_HOME: %s\n", javaHome)
-	}
+	fmt.Printf("Write-Host \"✓ JDK %s is now active!\"\n", version) // Informative message after successful switch
+	fmt.Printf("java -version\n") // Show current Java version
 }
