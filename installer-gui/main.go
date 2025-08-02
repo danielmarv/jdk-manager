@@ -7,12 +7,12 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
+	"runtime" // Go's standard library runtime package
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
-	"github.com/wailsapp/wails/v2/pkg/runtime"
+	wailsRuntime "github.com/wailsapp/wails/v2/pkg/runtime" // Aliased Wails' runtime package
 	// Import your existing JDK manager logic if needed for future GUI features
 	// "github.com/jdk-manager/internal/jdk"
 )
@@ -37,7 +37,7 @@ func (a *App) startup(ctx context.Context) {
 
 // InstallCLI builds the CLI and sets up shell integration
 func (a *App) InstallCLI(installPath string) (string, error) {
-	runtime.LogInfo(a.ctx, fmt.Sprintf("Starting CLI installation to: %s", installPath))
+	wailsRuntime.LogInfo(a.ctx, fmt.Sprintf("Starting CLI installation to: %s", installPath))
 
 	// Determine the root directory of the CLI project
 	// This assumes the GUI installer is run from the root of the jdk-manager project
@@ -48,18 +48,18 @@ func (a *App) InstallCLI(installPath string) (string, error) {
 		// Fallback if not found in parent, try current working directory (e.g., during dev)
 		cliProjectRoot, _ = os.Getwd()
 	}
-	runtime.LogInfo(a.ctx, fmt.Sprintf("CLI project root assumed to be: %s", cliProjectRoot))
+	wailsRuntime.LogInfo(a.ctx, fmt.Sprintf("CLI project root assumed to be: %s", cliProjectRoot))
 
 
 	// 1. Build the CLI executable
-	runtime.LogInfo(a.ctx, "Building CLI executable...")
+	wailsRuntime.LogInfo(a.ctx, "Building CLI executable...")
 	buildCmd := exec.Command("make", "build") // Assuming 'make' is available
 	buildCmd.Dir = cliProjectRoot
 	buildOutput, err := buildCmd.CombinedOutput()
 	if err != nil {
 		return "", fmt.Errorf("failed to build CLI: %s\n%s", err.Error(), string(buildOutput))
 	}
-	runtime.LogInfo(a.ctx, fmt.Sprintf("Build output:\n%s", string(buildOutput)))
+	wailsRuntime.LogInfo(a.ctx, fmt.Sprintf("Build output:\n%s", string(buildOutput)))
 
 	// Determine source path of the built executable
 	var cliExeName string
@@ -76,7 +76,7 @@ func (a *App) InstallCLI(installPath string) (string, error) {
 
 	// 2. Copy the executable to the target installPath
 	targetPath := filepath.Join(installPath, cliExeName)
-	runtime.LogInfo(a.ctx, fmt.Sprintf("Copying %s to %s...", sourcePath, targetPath))
+	wailsRuntime.LogInfo(a.ctx, fmt.Sprintf("Copying %s to %s...", sourcePath, targetPath))
 	
 	// Ensure the target directory exists
 	if err := os.MkdirAll(installPath, 0755); err != nil {
@@ -94,7 +94,7 @@ func (a *App) InstallCLI(installPath string) (string, error) {
 	}
 	
 	// 3. Configure shell integration (similar to install.sh/install.ps1)
-	runtime.LogInfo(a.ctx, "Configuring shell integration...")
+	wailsRuntime.LogInfo(a.ctx, "Configuring shell integration...")
 	var shellConfigOutput string
 	if runtime.GOOS == "windows" {
 		psScriptPath := filepath.Join(cliProjectRoot, "scripts", "install.ps1")

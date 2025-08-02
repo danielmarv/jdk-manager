@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react"
 import "./App.css"
-import { InstallCLI } from "./wailsjs/go/main/App" // Wails auto-generated Go binding
+// Corrected import path: go up one level from 'src' to 'frontend', then into 'wailsjs'
+import { InstallCLI } from "../wailsjs/go/main/App"
 
 function App() {
   const [installPath, setInstallPath] = useState("")
@@ -16,8 +17,10 @@ function App() {
     if (window.runtime) {
       setOsName(window.runtime.GOOS)
       if (window.runtime.GOOS === "windows") {
+        // Default to USERPROFILE\bin for Windows
         setInstallPath(`${window.runtime.USERPROFILE}\\bin`)
       } else {
+        // Default to /usr/local/bin for Linux/macOS
         setInstallPath("/usr/local/bin")
       }
     }
