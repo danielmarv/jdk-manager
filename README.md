@@ -188,7 +188,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgments
 
 - [Eclipse Adoptium](https://adoptium.net/) for providing free, high-quality JDK builds
-- [nvm](https://github.com/nvm-sh/nvm) for inspiration on version management UX
 - The Go community for excellent tooling and libraries
 
 ## 📞 Support
