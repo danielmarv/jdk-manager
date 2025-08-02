@@ -13,11 +13,11 @@ GOGET=$(GOCMD) get
 GOMOD=$(GOCMD) mod
 
 # Build targets
-.PHONY: all build clean test deps help
+.PHONY: all build build-all clean test deps help install uninstall
 
 all: clean deps test build
 
-build: ## Build the binary
+build: deps ## Build the binary
 	$(GOBUILD) $(LDFLAGS) -o $(BUILD_DIR)/$(BINARY_NAME) main.go
 
 build-all: ## Build for all platforms
@@ -38,8 +38,9 @@ clean: ## Clean build artifacts
 	rm -rf $(BUILD_DIR)
 
 deps: ## Download dependencies
-	$(GOMOD) download
+	mkdir -p $(BUILD_DIR)
 	$(GOMOD) tidy
+	$(GOMOD) download
 
 install: build ## Install the binary
 	cp $(BUILD_DIR)/$(BINARY_NAME) /usr/local/bin/
