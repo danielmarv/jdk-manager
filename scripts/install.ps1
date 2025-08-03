@@ -9,17 +9,31 @@ Write-Host "--- JDK Manager Installer (Windows PowerShell) ---"
 
 # 1. Build the Go binary
 Write-Host "Building JDK Manager binary..."
-# Ensure make is available in PowerShell or use go build directly
+$jdkExePath = Join-Path $ProjectDir "dist\jdk.exe"
+
+# Ensure dist directory exists
+New-Item -ItemType Directory -Force -Path (Split-Path $jdkExePath) | Out-Null
+
+# Explicitly set CGO_ENABLED for the build command and use go build directly
+$env:CGO_ENABLED = "1"
 try {
-    Invoke-Expression "make build"
+    # Use go build directly instead of 'make build' to avoid 'make' dependency issues
+    # Capture output to see any errors
+    $buildOutput = & go build -ldflags "-X github.com/jdk-manager/cmd.version=1.0.0" -o $jdkExePath main.go 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "Go build failed. Output:`n$buildOutput"
+        exit 1
+    }
 } catch {
-    Write-Error "Failed to run 'make build'. Ensure 'make' is installed and in your PATH, or build manually: go build -o .\dist\jdk.exe main.go"
+    Write-Error "Failed to execute Go build command: $_"
     exit 1
+} finally {
+    # Unset CGO_ENABLED after build to avoid affecting subsequent commands if not needed
+    Remove-Item Env:CGO_ENABLED -ErrorAction SilentlyContinue
 }
 
-$jdkExePath = Join-Path $ProjectDir "dist\jdk.exe"
 if (-not (Test-Path $jdkExePath)) {
-    Write-Error "Error: Build failed. 'dist\jdk.exe' not found."
+    Write-Error "Error: Build failed. 'dist\jdk.exe' not found after build attempt."
     exit 1
 }
 

@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"runtime"
+	// "runtime" // No longer directly used here for OS-specific commands, manager handles it
 
 	"github.com/jdk-manager/internal/jdk"
 	"github.com/spf13/cobra"
@@ -13,7 +13,8 @@ var useCmd = &cobra.Command{
 	Use:   "use <version>",
 	Short: "Switch to a specific JDK version",
 	Long: `Switch to a specific JDK version by setting JAVA_HOME and updating PATH.
-This command will output the necessary export commands that you need to run.
+This command will output the necessary shell commands that you need to run.
+These commands are typically executed by the 'jdk' shell function set up by the installer.
 
 Examples:
   jdk use 21     # Switch to JDK 21
@@ -46,25 +47,16 @@ func runUse(cmd *cobra.Command, args []string) {
 	jdkPath, err := manager.GetJDKPath(version)
 	checkError(err)
 
-	// Generate environment commands based on OS
-	switch runtime.GOOS {
-	case "windows":
-		generateWindowsCommands(version, jdkPath)
-	default: // Linux, macOS, and other Unix-like systems
-		generateUnixCommands(version, jdkPath)
+	// Check if this version is already active via the symlink
+	currentActiveVersion := manager.GetCurrentActiveJDKVersion()
+	if currentActiveVersion == version {
+		fmt.Fprintf(os.Stderr, "JDK %s is already active.\n", version)
+		os.Exit(0)
 	}
-}
 
-func generateUnixCommands(version, jdkPath string) {
-	fmt.Printf("export JAVA_HOME=\"%s\"\n", jdkPath)
-	fmt.Printf("export PATH=\"$JAVA_HOME/bin:$PATH\"\n")
-	fmt.Printf("echo \"✓ JDK %s is now active!\"\n", version) // Informative message after successful switch
-	fmt.Printf("java -version\n") // Show current Java version
-}
+	// Generate and print environment commands based on OS
+	// These commands will be executed by the shell function (e.g., in .bashrc or $PROFILE)
+	manager.GenerateSymlinkCommands(jdkPath)
 
-func generateWindowsCommands(version, jdkPath string) {
-	fmt.Printf("$env:JAVA_HOME = \"%s\"\n", jdkPath)
-	fmt.Printf("$env:PATH = \"$env:JAVA_HOME\\bin;$env:PATH\"\n")
-	fmt.Printf("Write-Host \"✓ JDK %s is now active!\"\n", version) // Informative message after successful switch
-	fmt.Printf("java -version\n") // Show current Java version
+	// Removed: showJavaVersion() - this is now handled by the shell function after execution
 }
